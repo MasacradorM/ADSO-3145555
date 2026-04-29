@@ -1,0 +1,36 @@
+flowchart TD
+    %% CLIENTE
+    subgraph CLIENTE
+        A([Inicio]) --> B[Seleccionar productos]
+        B --> C[Confirmar pedido]
+        C --> D[Realizar pago]
+        I([Recibe pedido]) 
+    end
+
+    %% SISTEMA
+    subgraph SISTEMA
+        E[Registrar pedido]
+        F{¿Pago OK?}
+        G[Confirmar pago]
+        H[Cancelar pedido]
+    end
+
+    %% COCINA
+    subgraph COCINA
+        J[Preparar pedido]
+        K[Marcar listo]
+        L[Entregar pedido]
+        M([Fin])
+    end
+
+    %% FLUJO ENTRE LANES
+    C --> E
+    D --> G
+    E --> F
+    F -->|Sí| G
+    F -->|No| H
+    G --> J
+    J --> K
+    K --> L
+    L --> I
+    I --> M

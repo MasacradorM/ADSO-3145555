@@ -1,0 +1,33 @@
+flowchart TD
+    %% USUARIO
+    subgraph USUARIO
+        A([Inicio]) --> B[Ingresar datos]
+        B --> C{¿Tiene cuenta?}
+        C -->|No| D[Registrarse]
+        C -->|Sí| E[Iniciar sesión]
+        K([Acceso al sistema])
+    end
+
+    %% SISTEMA
+    subgraph SISTEMA
+        F[Validar datos]
+        G{¿Datos válidos?}
+        H[Crear cuenta]
+        I[Verificar credenciales]
+        J{¿Credenciales OK?}
+        L[Mostrar error]
+        M[Generar sesión]
+    end
+
+    %% FLUJO ENTRE LANES
+    D --> F
+    F --> G
+    G -->|No| L
+    L --> B
+    G -->|Sí| H
+    H --> E
+    E --> I
+    I --> J
+    J -->|No| L
+    J -->|Sí| M
+    M --> K

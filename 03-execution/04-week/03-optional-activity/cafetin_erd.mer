@@ -1,0 +1,69 @@
+erDiagram
+    usuarios {
+        serial id PK
+        varchar nombre
+        varchar apellido
+        varchar correo
+        varchar contrasena
+        rol_usuario rol
+        boolean activo
+        timestamp creado_en
+        timestamp actualizado_en
+    }
+
+    categorias {
+        serial id PK
+        varchar nombre
+        varchar descripcion
+        boolean activo
+    }
+
+    productos {
+        serial id PK
+        int categoria_id FK
+        varchar nombre
+        varchar descripcion
+        numeric precio
+        varchar imagen_url
+        boolean activo
+        timestamp creado_en
+        timestamp actualizado_en
+    }
+
+    pedidos {
+        serial id PK
+        int usuario_id FK
+        estado_pedido estado
+        numeric total
+        boolean pago_recibido
+        varchar notas
+        timestamp fecha_pedido
+        timestamp fecha_entrega
+        timestamp actualizado_en
+    }
+
+    detalle_pedido {
+        serial id PK
+        int pedido_id FK
+        int producto_id FK
+        smallint cantidad
+        numeric precio_unitario
+        numeric subtotal
+    }
+
+    historial_estado_pedido {
+        serial id PK
+        int pedido_id FK
+        int usuario_id FK
+        estado_pedido estado_anterior
+        estado_pedido estado_nuevo
+        varchar observacion
+        timestamp cambiado_en
+    }
+
+    usuarios ||--o{ pedidos : "realiza"
+    usuarios ||--o{ historial_estado_pedido : "registra"
+    categorias ||--o{ productos : "contiene"
+    pedidos ||--o{ detalle_pedido : "tiene"
+    pedidos ||--o{ historial_estado_pedido : "registra"
+    productos ||--o{ detalle_pedido : "incluido en"

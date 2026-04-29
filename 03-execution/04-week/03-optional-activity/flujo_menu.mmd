@@ -1,0 +1,34 @@
+flowchart TD
+    %% ADMIN
+    subgraph ADMIN
+        A([Inicio]) --> B[Acceder al menú]
+        B --> C{¿Qué desea hacer?}
+        C -->|Crear| D[Ingresar datos del producto]
+        C -->|Editar| E[Seleccionar producto]
+        C -->|Desactivar| F[Seleccionar producto]
+        N([Fin])
+    end
+
+    %% SISTEMA
+    subgraph SISTEMA
+        G[Validar datos]
+        H{¿Datos válidos?}
+        I[Guardar producto]
+        J[Actualizar producto]
+        K[Desactivar producto]
+        L[Mostrar error]
+        M[Confirmar cambios]
+    end
+
+    %% FLUJO ENTRE LANES
+    D --> G
+    G --> H
+    H -->|No| L
+    L --> D
+    H -->|Sí| I
+    I --> M
+    E --> J
+    J --> M
+    F --> K
+    K --> M
+    M --> N
